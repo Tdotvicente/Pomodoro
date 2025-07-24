@@ -9,11 +9,11 @@ class Cronometro():
         self.ciclo = 1
 
     # configurando a interface do cronometro
-    def formatar_cronometro(self, segundos_restantes):
+    def Formatar_cronometro(self, segundos_restantes):
         return f'{segundos_restantes // 60}:{segundos_restantes % 60}'
 
     # configurando o processo do pomodoro
-    def temporizador(self):
+    def Temporizador(self):
         if self.estado == "Foco":
             if self.volta % 4 != 0:
                 self.estado = "Pausa"

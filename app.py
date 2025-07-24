@@ -10,23 +10,31 @@ class App(ctk.CTk):
 
     def __init__(self):
         super().__init__()
-        self.cronometro = Cronometro
-        self.Configurar_janela()
-        self.Menu_projeto()
-        self.rodando = False
 
-    # Configurando Janela
-    def Configurar_janela(self):
+        # Configurando Janela principal
         self.title("Pomodoro")
         self.geometry("400x400")
         self.resizable(False, False)
+
+        # Instanciando cronômetro (lógica)
+        self.Cronometro = Cronometro
+        self.rodando = False
+
+        # Criando abas e interface
+        self.Menu_projeto()
+        #self.Ariar_interface_home()
+        #self.Atualizar_estado()
+        self.abas.set("Home")
+
+        self.Temporizador_var = ctk.StringVar()
+        self.Temporizador_var.set(self.Cronometro.Formatar_cronometro())
 
     # Enquadramento dos botões usando tabview
     def Menu_projeto(self):
         self.abas = ctk.CTkTabview(self, width=390, height=390)
         self.abas.pack()
         self.abas.add("Home")
-        self.abas.tab("Home")
+        #self.abas.tab("Home")
         self.abas.add("Configuração")
         self.abas.add("Temas")
 
@@ -34,16 +42,41 @@ class App(ctk.CTk):
             botao.configure(width=100, height=30,
                         font=("Sans-serif", 16, "bold"))
 
+    # Criando elementos da aba Home
+    def Criar_interface_home(self):
+        pass
+
+
+    def Atualizar_estado_label(self):
+        textos = {
+            "Foco" : "Hora de focar",
+            "Pausa" : "Hora de pausar",
+            "Descanso" : "Hora de descansar"
+        }
+        estado = self.Cronometro.estado
+        self.Rotulo_estado.configure(text=textos.get(estado, ""))
+
     # Função que inicia o pomodoro
     def Iniciar_cronometro(self):
-        if not self.cronometro:
+        if not self.Cronometro:
             self.rodando = True
-            self.cronometro()
+            self.atualizar_contagem()
 
     # Função que encerra a função do pomodoro
     def Parar_cronometro(self):
         self.rodando = False
-        self.
+        self.cronometro_redefinir()
+        self.temporizador_var.set(self.Cronometro.Formatar_tempo())
+        self.Atualizar_estado_label()
+
+    # Atualizando cronometro por segundo
+    def Atualizar_contagem(self):
+        if not self.rodando:
+            return
+
+        if self.Cronometro.tempo >= 0:
+            pass
+
 
 if __name__ == "__main__":
     app = App()
