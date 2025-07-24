@@ -55,8 +55,6 @@ class App(ctk.CTk):
         self.rotulo_estado = ctk.CTkLabel(Menu_home, text="", font=("Sans-serif", 20))
         self.rotulo_estado.pack(pady=10)
 
-        
-
     def Atualizar_estado_label(self):
         textos = {
             "Foco": "Hora de focar",
