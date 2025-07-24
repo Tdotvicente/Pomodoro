@@ -20,7 +20,7 @@ class Cronometro():
                 self.tempo = pequena_pausa
 
             else:
-                self.estado = "Decanso"
+                self.estado = "Descanso"
                 self.tempo = longa_pausa
 
         elif self.estado == "Pausa":
