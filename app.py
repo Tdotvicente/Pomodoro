@@ -7,33 +7,27 @@ from CTkMessagebox import CTkMessagebox
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("green")
 
-
 class App(ctk.CTk):
-
     def __init__(self):
         super().__init__()
 
-        # Configurando Janela principal
         self.title("Pomodoro")
         self.geometry("400x400")
         self.resizable(False, False)
 
-        # Instanciando cronômetro (lógica)
-        self.Cronometro = Cronometro()
+        self.cronometro = Cronometro()
         self.rodando = False
 
-        # Criando abas e interface
-        self.Temporizador_var = ctk.StringVar(value=self.Cronometro.Formatar_cronometro(
-            self.Cronometro.tempo
+        self.temporizador_var = ctk.StringVar(value=self.cronometro.formatar_cronometro(
+            self.cronometro.tempo
         ))
 
-        self.Menu_projeto()
-        self.Criar_interface_home()
-        self.Atualizar_estado_label()
+        self.menu_projeto()
+        self.criar_interface_home()
+        self.atualizar_estado_label()
         self.abas.set("Home")
 
-    # Enquadramento dos botões usando tabview
-    def Menu_projeto(self):
+    def menu_projeto(self):
         self.abas = ctk.CTkTabview(self, width=390, height=390)
         self.abas.pack()
         self.abas.add("Home")
@@ -42,97 +36,77 @@ class App(ctk.CTk):
         self.abas.add("Temas")
 
         for botao in self.abas._segmented_button._buttons_dict.values():
-            botao.configure(width=100, height=30,
-                            font=("Sans-serif", 16, "bold"))
+            botao.configure(width=100, height=30, font=("Sans-serif", 16, "bold"))
 
-    # Criando elementos da aba Home
-    def Criar_interface_home(self):
-        Menu_home = self.abas.tab("Home")
+    def criar_interface_home(self):
+        menu_home = self.abas.tab("Home")
 
-        # Criando Labels dentro da aba home
-        self.rotulo_estado = ctk.CTkLabel(
-            Menu_home, text="", font=("Sans-serif", 30, "bold"))
+        self.rotulo_estado = ctk.CTkLabel(menu_home, text="", font=("Sans-serif", 30, "bold"))
         self.rotulo_estado.pack(pady=10)
 
-        self.rotulo_tempo = ctk.CTkLabel(Menu_home, textvariable=self.Temporizador_var, font=(
+        self.rotulo_tempo = ctk.CTkLabel(menu_home, textvariable=self.temporizador_var, font=(
             "Sans-serif", 30, "bold"), text_color=verde_vibrante)
         self.rotulo_tempo.pack(pady=10)
 
         self.botao_iniciar = ctk.CTkButton(
-            Menu_home, text="Iniciar", font=("Sans-serif", 20, "bold"), command=self.Iniciar_cronometro)
+            menu_home, text="Iniciar", font=("Sans-serif", 20, "bold"), command=self.iniciar_cronometro)
         self.botao_iniciar.pack(pady=10)
 
         self.botao_encerrar = ctk.CTkButton(
-            Menu_home, text="Parar", font=("Sans-serif", 20, "bold"), command=self.Parar_cronometro)
+            menu_home, text="Parar", font=("Sans-serif", 20, "bold"), command=self.parar_cronometro)
         self.botao_encerrar.pack(pady=10)
 
-    def Atualizar_estado_label(self):
-        estado = self.Cronometro.estado
+    def atualizar_estado_label(self):
+        estado = self.cronometro.estado
         texto = estados_ui.get(estado, "")
         self.rotulo_estado.configure(text=texto)
 
-    # Função que inicia o pomodoro
-    def Iniciar_cronometro(self):
-        if not self.Cronometro.rodando:
-            self.Cronometro.iniciar_cronometro()
+    def iniciar_cronometro(self):
+        if not self.cronometro.rodando:
+            self.cronometro.iniciar_cronometro()
             self.botao_iniciar.configure(state="disabled")
             self.botao_encerrar.configure(state="normal")
-            self.Atualizar_contagem()
+            self.atualizar_contagem()
 
-    # Função que encerra a função do pomodoro
-    def Parar_cronometro(self):
-        self.Cronometro.parar_cronometro()
-        self.Reiniciar_cronometro()
+    def parar_cronometro(self):
+        self.cronometro.parar_cronometro()
+        self.reiniciar_cronometro()
 
-    # Reiniciando cronômetro
-    def Reiniciar_cronometro(self):
-        self.Cronometro.reiniciar_cronometro()
-        self.Temporizador_var.set(
-            self.Cronometro.Formatar_cronometro(self.Cronometro.tempo))
-        self.Atualizar_estado_label()
+    def reiniciar_cronometro(self):
+        self.cronometro.reiniciar_cronometro()
+        self.temporizador_var.set(self.cronometro.formatar_cronometro(self.cronometro.tempo))
+        self.atualizar_estado_label()
         self.botao_iniciar.configure(state="normal")
         self.botao_encerrar.configure(state="disabled")
 
-    # Atualizando cronometro por segundo
-
-    def Atualizar_contagem(self):
-        if not self.Cronometro.rodando:
+    def atualizar_contagem(self):
+        if not self.cronometro.rodando:
             return
 
-        if self.Cronometro.tempo >= 0:
-            self.Cronometro.tempo -= 1
-            self.Temporizador_var.set(
-                self.Cronometro.Formatar_cronometro(self.Cronometro.tempo))
-            self.after(1000, self.Atualizar_contagem)
-
+        if self.cronometro.tempo >= 0:
+            self.cronometro.tempo -= 1
+            self.temporizador_var.set(self.cronometro.formatar_cronometro(self.cronometro.tempo))
+            self.after(1000, self.atualizar_contagem)
         else:
-            # Bloco feito para funcionar antes de mudar de foco
-            if self.Cronometro.estado == "Foco":
+            if self.cronometro.estado == "Foco":
                 self.rodando = False
-
                 resposta = CTkMessagebox(title=dialogo_mensagem["confirmação"]["titúlo"],
-                                        message=dialogo_mensagem["confirmação"]["mensagem"], icon="question",
-                                        option_1=dialogo_mensagem["confirmação"]["opções"][0],
-                                        option_2=dialogo_mensagem["confirmação"]["opções"][1])
-
+                                         message=dialogo_mensagem["confirmação"]["mensagem"], icon="question",
+                                         option_1=dialogo_mensagem["confirmação"]["opções"][0],
+                                         option_2=dialogo_mensagem["confirmação"]["opções"][1])
                 if resposta.get() == "Sim":
-                    self.Cronometro.Fases_etapas()
-                    self.Atualizar_estado_label()
-                    self.Temporizador_var.set(
-                        self.Cronometro.Formatar_cronometro(self.Cronometro.tempo))
+                    self.cronometro.fases_etapas()
+                    self.atualizar_estado_label()
+                    self.temporizador_var.set(self.cronometro.formatar_cronometro(self.cronometro.tempo))
                     self.rodando = True
-                    self.after(1000, self.Atualizar_contagem)
-
+                    self.after(1000, self.atualizar_contagem)
                 else:
-                    self.Parar_cronometro()
-
+                    self.parar_cronometro()
             else:
-                self.Cronometro.Fases_etapas()
-                self.Atualizar_estado_label()
-                self.Temporizador_var.set(
-                    self.Cronometro.Formatar_cronometro(self.Cronometro.tempo))
-                self.after(1000, self.Atualizar_contagem)
-
+                self.cronometro.fases_etapas()
+                self.atualizar_estado_label()
+                self.temporizador_var.set(self.cronometro.formatar_cronometro(self.cronometro.tempo))
+                self.after(1000, self.atualizar_contagem)
 
 if __name__ == "__main__":
     app = App()
