@@ -10,13 +10,13 @@ class Cronometro():
 
     ## Lógica de como funciona o pomodoro
     # configurando a interface do cronometro
-    def Formatar_cronometro(self, segundos_restantes):
+    def formatar_cronometro(self, segundos_restantes):
         minutos = segundos_restantes // 60
         segundos = segundos_restantes % 60
         return f'{minutos:02d}:{segundos:02d}'
 
     # configurando o processo do pomodoro
-    def Fases_etapas(self):
+    def fases_etapas(self):
         if self.estado == "Foco":
             if self.volta % 4 != 0:
                 self.estado = "Pausa"
