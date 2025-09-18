@@ -6,8 +6,8 @@ estados_ui = {
 }
 
 # Mensagens exibidas, em caixa de dialogos, entre troca de momentos.
-# Elas têm a função de mostrar que uma etapas
-# A interação será feita para iniciar ou pular um ciclo
+# Elas têm a função de ser exibida entre etapas
+# A interação será feita para iniciar finalizar ou pular um ciclo
 dialogo_mensagem = {
     "ação": {
         "titúlo": "Pomodoro",
