@@ -15,6 +15,6 @@ dialogo_mensagem = {
         "Focar": "O descanso Acabou.\nDeseja começar a focar?",
         "Descansar": "O ciclo acabou.\nVamos descansar",
         "Novo_ciclo": "Deseja começar\num novo ciclo",
-        "opções": ["[1] Sim", "[2] Não", "[3] Pular"
+        "opções": ["[1] Sim", "[2] Não", "[3] Pular"]
     }
 }
