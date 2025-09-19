@@ -1,4 +1,4 @@
-# Mensagem usada para guiar as o estado atual do pomodoro e exibida ao usuário
+# Mensagem usada para informar o estado atual do pomodoro e exibida ao usuário
 estados_ui = {
     "Foco": "Hora de focar",
     "Pausa": "Hora de pausar",
