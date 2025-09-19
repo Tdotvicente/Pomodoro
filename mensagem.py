@@ -10,11 +10,11 @@ estados_ui = {
 # A interação será feita para iniciar finalizar ou pular um ciclo
 dialogo_mensagem = {
     "ação": {
-        "titúlo": "Pomodoro",
+        "titulo": "Pomodoro",
         "Pausar": "O tempo acabou.\nfazer pequeno descanso?",
         "Focar": "O descanso Acabou.\nDeseja começar a focar?",
         "Descansar": "O ciclo acabou.\nVamos descansar",
         "Novo_ciclo": "Deseja começar\num novo ciclo",
-        "opções": ["[1] Sim", "[2] Não", "[3] Pular"]
+        "opções": ["1.Sim", "2.Não", "3.Pular"]
     }
 }

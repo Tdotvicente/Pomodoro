@@ -1,6 +1,6 @@
 # Configurações globais
 foco_min = 10
-pequena_pausa = 10
+pequena_pausa = 5
 longa_pausa = 20
 
 # Cores

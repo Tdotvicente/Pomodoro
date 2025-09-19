@@ -37,6 +37,27 @@ class Cronometro():
             self.ciclo += 1
             self.volta = 1
 
+    def proximo_estado(self):
+        if self.estado == "Foco":
+            return "Pausa" if self.volta % 4 != 0 else "Descanso"
+
+        elif self.estado in ["Pausa", "Descanso"]:
+            return "Foco"
+
+    ## Pulando etapa
+    # A função abaixo, é feita para pular certos momentos espeficicos
+    # onde é feita para iginorar o periodo de pausa,indo direto para
+    # outro momento de foco ou ignnorando momento de descanso e iniciando
+    # um novo ciclo
+
+    def pular_etapa(self):
+        if self.estado == "Foco":
+            self.fases_etapas()
+            self.fases_etapas()
+
+        elif self.estado in ("Pausa", "Descanso"):
+            self.fases_etapas()
+
     ## Ativando e desativando o programa
     # Iniciando o cronômetro do pomodoro
     def iniciar_cronometro(self):

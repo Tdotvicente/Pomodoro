@@ -57,6 +57,7 @@ class App(ctk.CTk):
         self.botao_encerrar.pack(pady=10)
 
     def atualizar_estado_label(self):
+        volta = self.cronometro.volta
         estado = self.cronometro.estado
         texto = estados_ui.get(estado, "")
         self.rotulo_estado.configure(text=texto)
@@ -83,27 +84,50 @@ class App(ctk.CTk):
         if not self.cronometro.rodando:
             return
 
-        if self.cronometro.tempo >= 0:
+        if self.cronometro.tempo > 0:
             self.cronometro.tempo -= 1
             self.temporizador_var.set(self.cronometro.formatar_cronometro(self.cronometro.tempo))
             self.after(1000, self.atualizar_contagem)
+
         else:
-            if self.cronometro.estado == "Foco":
-                self.rodando = False
-                resposta = CTkMessagebox(title=dialogo_mensagem["confirmação"]["titúlo"],
-                                         message=dialogo_mensagem["confirmação"]["mensagem"], icon="question",
-                                         option_1=dialogo_mensagem["confirmação"]["opções"][0],
-                                         option_2=dialogo_mensagem["confirmação"]["opções"][1])
-                if resposta.get() == "Sim":
-                    self.cronometro.fases_etapas()
-                    self.atualizar_estado_label()
-                    self.temporizador_var.set(self.cronometro.formatar_cronometro(self.cronometro.tempo))
-                    self.rodando = True
-                    self.after(1000, self.atualizar_contagem)
-                else:
-                    self.parar_cronometro()
+
+            # Bloco de informações, baseando-se no estado exibido na GUI
+            proximo = self.cronometro.proximo_estado()
+
+            if proximo == "Pausa":
+                mensagem = dialogo_mensagem["ação"]["Pausar"]
+
+            elif proximo == "Foco":
+                mensagem = dialogo_mensagem["ação"]["Focar"]
+
+            elif proximo == "Descanso":
+                mensagem = dialogo_mensagem["ação"]["Descansar"]
+
             else:
+                mensagem = dialogo_mensagem["ação"]["Novo_ciclo"]
+
+            resposta = CTkMessagebox(title=dialogo_mensagem["ação"]["titulo"],
+                                     message = mensagem, icon = "question",
+                                     option_1=dialogo_mensagem["ação"]["opções"][0],
+                                     option_2=dialogo_mensagem["ação"]["opções"][1],
+                                     option_3=dialogo_mensagem["ação"]["opções"][2])
+
+            #Bloco baseado em decisão da caixa de dialogo (CTkMessegebox)
+            escolha = resposta.get()
+            # escolhendo sim
+            if escolha.startswith("1"):
                 self.cronometro.fases_etapas()
+                self.atualizar_estado_label()
+                self.temporizador_var.set(self.cronometro.formatar_cronometro(self.cronometro.tempo))
+                self.after(1000, self.atualizar_contagem)
+
+            # escolhendo não
+            elif escolha.startswith("2"):
+                self.parar_cronometro()
+
+            # escolhendo pular
+            elif escolha.startswith("3"):
+                self.cronometro.pular_etapa()
                 self.atualizar_estado_label()
                 self.temporizador_var.set(self.cronometro.formatar_cronometro(self.cronometro.tempo))
                 self.after(1000, self.atualizar_contagem)
