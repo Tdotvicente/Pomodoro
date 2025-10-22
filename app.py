@@ -1,7 +1,7 @@
 import customtkinter as ctk
 from cronometro import Cronometro
 from mensagem import dialogo_mensagem, estados_ui
-from config import verde_vibrante, foco_min
+from config import verde_vibrante, evento_foco, evento_volta
 from CTkMessagebox import CTkMessagebox
 
 ctk.set_appearance_mode("dark")
@@ -24,6 +24,7 @@ class App(ctk.CTk):
 
         self.menu_projeto()
         self.criar_interface_home()
+        self.criar_interface_configuracao()
         self.atualizar_estado_label()
         self.abas.set("Home")
 
@@ -135,9 +136,11 @@ class App(ctk.CTk):
 
     # Aba configuracao do pomodoro
     def criar_interface_configuracao(self):
-        menu_config = self.aba.tab("Configuração")
+        menu_config = self.abas.tab("Configuração")
 
         # Criando parametros para que o usuario possa personalizar o pomodoro
+        evento_foco(menu_config)
+        evento_volta(menu_config)
 
 if __name__ == "__main__":
     app = App()

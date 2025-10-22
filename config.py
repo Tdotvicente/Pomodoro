@@ -12,7 +12,7 @@ def evento_foco(master):
         global foco_min
         return value * 60
 
-    slider_foco = ctk.CTkSlider(master=master, from_=10, to=60, command=set_foco_min)
+    slider_foco = ctk.CTkSlider(master=master, from_=10, to=60,number_of_steps=100, command=set_foco_min)
     slider_foco.pack(padx=20, pady=20)
     slider_foco.set(25)
 
@@ -22,7 +22,7 @@ def evento_pausa(master):
         global pequena_pausa
         return value * 60
 
-    slider_pausa = ctk.CTkSlider(master=master, from_=5, to=20, command=set_pausa_min)
+    slider_pausa = ctk.CTkSlider(master=master, from_=5, to=20, number_of_steps=100, command=set_pausa_min)
     slider_pausa.pack(padx=40, pady=20)
     slider_pausa.set(5)
 
@@ -32,7 +32,7 @@ def evento_descanso(master):
         global longa_pausa
         return value * 60
 
-    slider_descanso = ctk.CTkSlider(master=master, from_=10, to=60, command=set_descanso_min)
+    slider_descanso = ctk.CTkSlider(master=master, from_=10, to=60, number_of_steps=100, command=set_descanso_min)
     slider_descanso.pack(padx=60, pady=20)
     slider_descanso.set(15)
 
@@ -42,7 +42,7 @@ def evento_volta(master):
         global volta_numero
         return value
     
-    slider_volta = ctk.CTkSlider(master=master, from_=2, to=10, command=set_volta_numero)
+    slider_volta = ctk.CTkSlider(master=master, from_=2, to=10, number_of_steps=100, command=set_volta_numero)
     slider_volta.pack()
     slider_volta.set(4)
 
